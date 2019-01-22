@@ -23602,7 +23602,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+function webSocketTest() {
+  var ws = new WebSocket("ws://localhost:43211");
+
+  ws.onopen = function () {
+    console.log("websocket open");
+    ws.send('hello');
+  };
+
+  ws.onmessage = function (theMessage) {
+    console.log(theMessage.data);
+  };
+}
+
 function App(props) {
+  webSocketTest();
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Header__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Body__WEBPACK_IMPORTED_MODULE_2__["default"], null));
 }
 

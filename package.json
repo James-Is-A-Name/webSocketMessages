@@ -24,7 +24,8 @@
     "express": "^4.16.4",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "webpack": "^4.29.0"
+    "webpack": "^4.29.0",
+    "ws": "^6.1.2"
   },
   "devDependencies": {
     "webpack-cli": "^3.2.1"
