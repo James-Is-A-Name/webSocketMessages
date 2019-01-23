@@ -1,11 +1,15 @@
 import React from "react"
 
 function Body(props){
+
+    let theMessages = props.messages.map( (message)=>{
+        return <li>{message}</li>
+    });
     
     return (
-        <p>
-            The main body and stuff of the page
-        </p>
+        <ul>
+            {theMessages}
+        </ul>
     );
 }
 
