@@ -4,52 +4,55 @@ import TheHeader from "./Header"
 import Body from "./Body"
 
 
-
-
-
-
-
-function webSocketTest(anObject){
-
-    let ws = new WebSocket("ws://localhost:43211");
-    ws.onopen = ()=> {
-        console.log("websocket open")
-        ws.send('hello')
-    }
-
-    ws.onmessage = (theMessage) => {
-        console.log(`got a message of ${theMessage.data}`);
-        anObject.messageReceive(theMessage.data);
-    }
-
-    return ws;
-}
-
-
 class App extends React.Component{
 
     constructor(props){
         super(props);
+
         this.state ={
             ws: undefined,
             messages: []
         }
 
-        this.messageReceive = this.messageReceive.bind();
-        this.getAWebsocket = this.getAWebsocket.bind();
+    }
+
+    sayHello(message){
+        console.log(message);
     }
 
     componentDidMount(){
+        this.webSocketTest();
+        console.log("component mount part")
 
+        setTimeout( ()=>{
+            this.state.ws.send("another Message")
+        },5000)
     }
 
-    getAWebsocket(ws){
+    webSocketTest(anObject){
+
+        let ws = new WebSocket("ws://localhost:43211");
+        ws.onopen = ()=> {
+            console.log("websocket open")
+            ws.send('hello')
+        }
+
+        ws.onmessage = (theMessage) => {
+            console.log(`got a message of ${theMessage.data}`);
+            this.messageReceive(theMessage.data);
+        }
+
+        this.gotAWebsocket(ws);
+    }
+    gotAWebsocket(ws){
+
+        //This should really check its valid first
         this.setState ( {
             ...this.state,
             ws: ws
         });
 
-        console.log(`web socket obtained for the app test`)
+        console.log(`web socket obtained for the app test`);
     }
 
     messageReceive(theMessage){

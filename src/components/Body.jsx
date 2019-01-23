@@ -2,8 +2,8 @@ import React from "react"
 
 function Body(props){
 
-    let theMessages = props.messages.map( (message)=>{
-        return <li>{message}</li>
+    let theMessages = props.messages.map( (message,i)=>{
+        return <li key={`message-id-${i}`}>{message}</li>
     });
     
     return (
