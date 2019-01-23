@@ -1,7 +1,8 @@
-import React from "react"
+import React from "react";
 
-import TheHeader from "./Header"
-import Body from "./Body"
+import TheHeader from "./Header";
+import Body from "./Body";
+import Speak from "./Speak";
 
 
 class App extends React.Component{
@@ -16,8 +17,8 @@ class App extends React.Component{
 
     }
 
-    sayHello(message){
-        console.log(message);
+    sendMessage(message){
+        this.state.ws.send(message);
     }
 
     componentDidMount(){
@@ -71,6 +72,7 @@ class App extends React.Component{
         return (
             <React.Fragment>
                 <TheHeader/>
+                <Speak send={(message)=>this.sendMessage(message)}/>
                 <Body messages={this.state.messages}/>
             </React.Fragment>            
         );
