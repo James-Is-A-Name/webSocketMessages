@@ -57,6 +57,12 @@ class App extends React.Component{
                 }
                 this.messageReceive(messageObject);
             }
+            else if(messageObject.newId){
+                this.setState({
+                    ...this.state,
+                    id: messageObject.newId
+                })
+            }
         }
         this.gotAWebsocket(ws);
     }

@@ -45,7 +45,7 @@ function webSocketStart(portNum , completedCallback){
 
         ws.on("message",(message)=>{
 
-            console.log(`parsing the message of ${message}`)
+            console.log(`parsing the message of ${message}`);
             let theMessage = JSON.parse(message);
 
             if(theMessage.text){
@@ -53,6 +53,11 @@ function webSocketStart(portNum , completedCallback){
                 if(theMessage.id == theWebsocket.id){
                     console.log(`got a message from ${theWebsocket.id}`);
                     broadcastMessage(theMessage.text,theWebsocket.id);
+                }
+                else{
+                    //This might be unneeded 
+                    let connection = webSocketsConnected.find( (socket) => socket.id == theWebsocket.id )
+                    connection.ws.send(JSON.stringify({newId:theWebsocket.id}));
                 }
             }
         })
