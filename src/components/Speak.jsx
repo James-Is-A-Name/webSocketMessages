@@ -8,11 +8,6 @@ class Speak extends React.Component{
         this.state = {
             message: ""
         }
-
-    }
-
-    saySomething(){
-        console.log("stuff")
     }
 
     handleChange(event){
@@ -38,8 +33,8 @@ class Speak extends React.Component{
 
     render(){
         return (
-            <form onSubmit={(e)=>{e.preventDefault();this.send() }} onChange={this.handleChange.bind(this)}>            
-                <input type="text" name="message" id="messageInput" value={this.state.message}/>
+            <form onSubmit={(e)=>{e.preventDefault();this.send() }}>            
+                <input type="text" name="message" id="messageInput" onChange={this.handleChange.bind(this)} value={this.state.message}/>
             </form>
         );
     }
