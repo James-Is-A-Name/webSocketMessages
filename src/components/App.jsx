@@ -41,6 +41,8 @@ class App extends React.Component{
         ws.onmessage = (theMessage) => {
             console.log(`got a message of ${theMessage.data}`);
             this.messageReceive(theMessage.data);
+
+            // this.messageReceive(JSON.parse(theMessage.data));
         }
 
         this.gotAWebsocket(ws);
@@ -78,16 +80,5 @@ class App extends React.Component{
         );
     }
 }
-
-// function App(props){
-//     webSocketTest();
-//     return (
-//         <React.Fragment>
-//             <TheHeader/>
-//             <Body/>
-//         </React.Fragment>
-//     );
-// }
-
 
 export default App 
