@@ -23,7 +23,7 @@ class App extends React.Component{
             id: this.state.id,
             text: message
         }
-        this.state.ws.send(messageObject);
+        this.state.ws.send(JSON.stringify(messageObject));
     }
 
     componentDidMount(){
@@ -31,7 +31,8 @@ class App extends React.Component{
         console.log("component mount part")
 
         setTimeout( ()=>{
-            this.state.ws.send("another Message")
+            
+            this.sendMessage("another Message");
         },5000)
     }
 
@@ -40,7 +41,7 @@ class App extends React.Component{
         let ws = new WebSocket("ws://localhost:43211");
         ws.onopen = ()=> {
             console.log("websocket open")
-            ws.send('hello')
+            this.sendMessage('hello');
         }
 
         //this function should possibly be put somewhere else, just make this a short function that passes on the websocket
