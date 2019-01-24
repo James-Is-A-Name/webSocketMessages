@@ -11,6 +11,7 @@ class App extends React.Component{
         super(props);
 
         this.state ={
+            id: 0,
             ws: undefined,
             messages: []
         }
@@ -18,7 +19,11 @@ class App extends React.Component{
     }
 
     sendMessage(message){
-        this.state.ws.send(message);
+        let messageObject = {
+            id: this.state.id,
+            text: message
+        }
+        this.state.ws.send(messageObject);
     }
 
     componentDidMount(){
@@ -38,17 +43,24 @@ class App extends React.Component{
             ws.send('hello')
         }
 
+        //this function should possibly be put somewhere else, just make this a short function that passes on the websocket
         ws.onmessage = (theMessage) => {
             console.log(`got a message of ${theMessage.data}`);
-            this.messageReceive(theMessage.data);
 
-            // this.messageReceive(JSON.parse(theMessage.data));
+            // this.messageReceive(theMessage.data);
+            let messageObject = JSON.parse(theMessage.data);
+
+            if(messageObject.text){
+                if(messageObject.id == undefined){
+                    messageObject.id = -1;
+                }
+                this.messageReceive(messageObject);
+            }
         }
-
         this.gotAWebsocket(ws);
     }
-    gotAWebsocket(ws){
 
+    gotAWebsocket(ws){
         //This should really check its valid first
         this.setState ( {
             ...this.state,
