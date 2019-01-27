@@ -28,12 +28,11 @@ class App extends React.Component{
 
     componentDidMount(){
         this.webSocketTest();
-        console.log("component mount part")
 
         setTimeout( ()=>{
             
-            this.sendMessage("another Message");
-        },5000)
+            this.sendMessage("I have Joined");
+        },2000)
     }
 
     webSocketTest(anObject){
@@ -41,7 +40,7 @@ class App extends React.Component{
         let ws = new WebSocket("ws://localhost:43211");
         ws.onopen = ()=> {
             console.log("websocket open")
-            this.sendMessage('hello');
+            this.sendMessage('Finding ID');
         }
 
         //this function should possibly be put somewhere else, just make this a short function that passes on the websocket
