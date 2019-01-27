@@ -13,9 +13,9 @@ class App extends React.Component{
         this.state ={
             id: 0,
             ws: undefined,
+            users: [],
             messages: []
         }
-
     }
 
     sendMessage(message){
@@ -94,7 +94,7 @@ class App extends React.Component{
             <React.Fragment>
                 <TheHeader/>
                 <Speak send={(message)=>this.sendMessage(message)}/>
-                <Body messages={this.state.messages}/>
+                <Body userId={this.state.id} messages={this.state.messages}/>
             </React.Fragment>            
         );
     }
