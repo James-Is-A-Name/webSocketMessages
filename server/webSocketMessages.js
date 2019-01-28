@@ -5,6 +5,7 @@ let webSocket = require("ws").Server;
 //This is not safe, would need atomic interaction
 let idRefNumber = 1;
 
+//this should just be an object/class thing
 let webSocketsConnected = []
 
 
@@ -22,6 +23,14 @@ function broadcastMessage(messageText,idOfSender){
             }
         }
     })
+}
+
+function handleMessge(connection,message){
+    broadcastMessage(message.text,connection.id);
+}
+function getAnID(user){
+    let connection = webSocketsConnected.find( (socket) => socket.id == user.id )
+    connection.ws.send(JSON.stringify({newId:connection.id}));
 }
 
 function webSocketStart(portNum , completedCallback){
@@ -44,21 +53,12 @@ function webSocketStart(portNum , completedCallback){
         webSocketsConnected.push(theWebsocket);
 
         ws.on("message",(message)=>{
-
-            console.log(`parsing the message of ${message}`);
             let theMessage = JSON.parse(message);
-
-            if(theMessage.text){
-                //This double checking might be a bit pointless
-                if(theMessage.id == theWebsocket.id){
-                    console.log(`got a message from ${theWebsocket.id}`);
-                    broadcastMessage(theMessage.text,theWebsocket.id);
-                }
-                else{
-                    //This might be unneeded 
-                    let connection = webSocketsConnected.find( (socket) => socket.id == theWebsocket.id )
-                    connection.ws.send(JSON.stringify({newId:theWebsocket.id}));
-                }
+            if(theMessage.giveMeAnID){
+                getAnID(theWebsocket)
+            }
+            else{
+                handleMessge(theWebsocket,theMessage)
             }
         })
     })

@@ -26,21 +26,29 @@ class App extends React.Component{
         this.state.ws.send(JSON.stringify(messageObject));
     }
 
+    requestId(){
+        let messageObject = {
+            id: this.state.id,
+            text: "can i get an ID Please",
+            giveMeAnID: true
+        }
+        this.state.ws.send(JSON.stringify(messageObject));
+    }
+
     componentDidMount(){
         this.webSocketTest();
 
         setTimeout( ()=>{
-            
             this.sendMessage("I have Joined");
         },2000)
     }
 
-    webSocketTest(anObject){
+    webSocketTest(){
 
         let ws = new WebSocket("ws://localhost:43211");
         ws.onopen = ()=> {
             console.log("websocket open")
-            this.sendMessage('Finding ID');
+            this.requestId();
         }
 
         //this function should possibly be put somewhere else, just make this a short function that passes on the websocket
