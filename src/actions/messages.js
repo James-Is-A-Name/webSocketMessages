@@ -1,5 +1,5 @@
 
-function addMessageAction(message) {
+export function addMessageAction(message) {
     return {
         type: 'ADD_MESSAGE',
         message: message
@@ -14,7 +14,7 @@ export function addMessage(message) {
 
 
 
-function setMessagesAction(message) {
+export function setMessagesAction(message) {
     return {
         type: 'SET_MESSAGES',
         messages: messages
