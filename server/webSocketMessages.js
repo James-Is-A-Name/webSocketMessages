@@ -16,7 +16,6 @@ function broadcastActiveConnections(){
     webSocketsConnected.forEach((connection)=>{
         if(!connection.ended){        
             if(connection.ws.readyState === 1){
-                // connection.ws.send(`got message from person ${idOfSender} : ${message}`);
                 connection.ws.send(JSON.stringify({activeConnections}));
             }
             else{
@@ -26,12 +25,9 @@ function broadcastActiveConnections(){
     })
 }
 function broadcastMessage(messageText,idOfSender){
-    //console.log(`broadcasting message from id=${idOfSender}. it reads ${messageText}`)
-
     webSocketsConnected.forEach((connection)=>{
         if(!connection.ended){        
             if(connection.ws.readyState === 1){
-                // connection.ws.send(`got message from person ${idOfSender} : ${message}`);
                 connection.ws.send(JSON.stringify({id:idOfSender, text:messageText}));
             }
             else{
@@ -46,7 +42,6 @@ function checkTheWebsockets(){
     let newActiveConnections = []
     webSocketsConnected.forEach((connection,index)=>{
         if(connection.ws.readyState === 1){
-            console.log(`person ${index} is connected`);
             newActiveConnections.push(webSocketsConnected[index].id)
         }
     })
