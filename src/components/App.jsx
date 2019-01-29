@@ -49,6 +49,9 @@ class App extends React.Component{
     webSocketTest(){
 
         let ws = new WebSocket("ws://localhost:43211");
+        // will want a way for this to automatically set itself based on where it is installed
+            // dns stuff might sort it out
+        // let ws = new WebSocket("ws://192.168.1.82:43211");
         ws.onopen = ()=> {
             console.log("websocket open")
             this.requestId();
