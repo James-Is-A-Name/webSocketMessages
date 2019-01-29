@@ -8,9 +8,11 @@ function MessageThread(props){
     });
     
     return (
-        <ul>
-            {theMessages}
-        </ul>
+        <div style={{border:"solid 1px blue", padding:"5px", margin:"2px"}}>
+            <ul>
+                {theMessages}
+            </ul>
+        </div>
     );
 }
 
