@@ -7,7 +7,8 @@ function Message(props){
     return (
         <div style={{display: "grid", gridTemplateColumns: "100px 300px",width:"400px", border:"1px solid"}}>
 
-            <div style={{border:"1px dashed",paddingLeft:"5px",height:"100%",width:"100%"}}>
+            {/* the z index is because the div appears to be shifted slightly and blocking a pixel at the bottom */}
+            <div style={{backgroundColor:"lightBlue", zIndex:"-1",paddingLeft:"5px",height:"100%",width:"100%"}}>
                 <span> Person {theMessage.id}</span>
             </div>
             <div>
