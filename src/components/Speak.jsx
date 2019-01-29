@@ -33,9 +33,12 @@ class Speak extends React.Component{
 
     render(){
         return (
-            <form onSubmit={(e)=>{e.preventDefault();this.send() }}>            
-                <input type="text" name="message" id="messageInput" onChange={this.handleChange.bind(this)} value={this.state.message}/>
-            </form>
+            <div style={{display:"grid",gridTemplateColumns:"200px 1fr"}}>
+                <h2>connected as Person {this.props.userId}</h2>
+                <form style={{marginTop:"auto",marginBottom:"auto"}} onSubmit={(e)=>{e.preventDefault();this.send() }}>            
+                    <input type="text" name="message" id="messageInput" onChange={this.handleChange.bind(this)} value={this.state.message}/>
+                </form>
+            </div>
         );
     }
 }

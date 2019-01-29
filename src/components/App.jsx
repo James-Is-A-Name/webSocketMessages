@@ -107,7 +107,7 @@ class App extends React.Component{
         return (
             <React.Fragment>
                 <TheHeader/>
-                <Speak send={(message)=>this.sendMessage(message)}/>
+                <Speak userId={this.state.id} send={(message)=>this.sendMessage(message)}/>
                 <Body userId={this.state.id} activeConnections={this.state.activeConnections}/>
             </React.Fragment>
         );
