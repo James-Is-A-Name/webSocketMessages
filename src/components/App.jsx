@@ -1,8 +1,12 @@
 import React from "react";
 
+import {connect} from "react-redux"
+
 import TheHeader from "./Header";
 import Body from "./Body";
 import Speak from "./Speak";
+
+import {addMessageAction} from "../actions/messages"
 
 
 class App extends React.Component{
@@ -13,8 +17,7 @@ class App extends React.Component{
         this.state ={
             id: 0,
             ws: undefined,
-            users: [],
-            messages: []
+            users: []
         }
     }
 
@@ -86,14 +89,7 @@ class App extends React.Component{
 
     messageReceive(theMessage){
 
-        let newMessages = this.state.messages;
-        newMessages.push(theMessage);
-        this.setState(
-            {
-                ...this.state,
-                messages: newMessages
-            }
-        )
+        this.props.addMessage(theMessage);
     }
 
     render(){
@@ -101,10 +97,19 @@ class App extends React.Component{
             <React.Fragment>
                 <TheHeader/>
                 <Speak send={(message)=>this.sendMessage(message)}/>
-                <Body userId={this.state.id} messages={this.state.messages}/>
+                <Body userId={this.state.id}/>
             </React.Fragment>            
         );
     }
 }
 
-export default App 
+
+const mapDispatchToProps = (dispatch)=>{
+    return{
+        addMessage: (message) => {
+            dispatch(addMessageAction(message))
+        }
+    }
+}
+
+export default connect(null,mapDispatchToProps)(App)

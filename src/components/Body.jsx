@@ -1,11 +1,12 @@
 import React from "react"
-import MessageThread from "./MessageThread" 
+import MessageThread from "./MessageThread"
+
+import { connect } from "react-redux";
 
 function Body(props){
 
     let seperatedMessages = props.messages.reduce((output,message)=>{
-        if(props.userId == message.id)
-        {
+        if(props.userId == message.id){
             return output;
         }
         if(output[message.id]){
@@ -29,5 +30,10 @@ function Body(props){
     );
 }
 
+const mapStateToProps = (state) => {
+    return {
+        messages: state.messages.messages
+    }
+}
 
-export default Body
+export default connect(mapStateToProps)(Body)
