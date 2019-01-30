@@ -8,14 +8,26 @@ let idRefNumber = 1;
 //this should just be an object/class thing
 let webSocketsConnected = []
 
+let activeConnections = [];
 
-function broadcastMessage(messageText,idOfSender){
-    console.log(`broadcasting message from id=${idOfSender}. it reads ${messageText}`)
 
+function broadcastActiveConnections(){
+    
     webSocketsConnected.forEach((connection)=>{
         if(!connection.ended){        
             if(connection.ws.readyState === 1){
-                // connection.ws.send(`got message from person ${idOfSender} : ${message}`);
+                connection.ws.send(JSON.stringify({activeConnections}));
+            }
+            else{
+                connection.ended = true;
+            }
+        }
+    })
+}
+function broadcastMessage(messageText,idOfSender){
+    webSocketsConnected.forEach((connection)=>{
+        if(!connection.ended){        
+            if(connection.ws.readyState === 1){
                 connection.ws.send(JSON.stringify({id:idOfSender, text:messageText}));
             }
             else{
@@ -23,6 +35,19 @@ function broadcastMessage(messageText,idOfSender){
             }
         }
     })
+}
+
+function checkTheWebsockets(){
+
+    let newActiveConnections = []
+    webSocketsConnected.forEach((connection,index)=>{
+        if(connection.ws.readyState === 1){
+            newActiveConnections.push(webSocketsConnected[index].id)
+        }
+    })
+
+    activeConnections = newActiveConnections;
+    broadcastActiveConnections();
 }
 
 function handleMessge(connection,message){
@@ -61,6 +86,11 @@ function webSocketStart(portNum , completedCallback){
                 handleMessge(theWebsocket,theMessage)
             }
         })
+
+        ws.on("close",()=>{
+            checkTheWebsockets();
+        });
+        checkTheWebsockets(); //Just put it here for testing. move later to better place
     })
 
     completedCallback();

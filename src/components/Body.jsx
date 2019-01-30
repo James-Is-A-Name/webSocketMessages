@@ -19,8 +19,12 @@ function Body(props){
         return output;
     },{})
 
-    let theMessages = Object.keys(seperatedMessages).map((key,index)=>{
-        return <MessageThread key={`message-id-${index}`} messages={seperatedMessages[key]}/>
+    let theMessages = Object.keys(seperatedMessages).map((key)=>{
+
+        let isActive = props.activeConnections.reduce((output,activeConnection) =>{
+            return activeConnection == key ? true : output 
+        },false);
+        return <MessageThread key={`message-id-${key}`} isActive={isActive} messages={seperatedMessages[key]}/>
     });
     
     return (

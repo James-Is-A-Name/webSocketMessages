@@ -17,7 +17,8 @@ class App extends React.Component{
         this.state ={
             id: 0,
             ws: undefined,
-            users: []
+            users: [],
+            activeConnections: []
         }
     }
 
@@ -64,6 +65,7 @@ class App extends React.Component{
             // this.messageReceive(theMessage.data);
             let messageObject = JSON.parse(theMessage.data);
 
+            //this should be re-thought
             if(messageObject.text){
                 if(messageObject.id == undefined){
                     messageObject.id = -1;
@@ -74,6 +76,12 @@ class App extends React.Component{
                 this.setState({
                     ...this.state,
                     id: messageObject.newId
+                })
+            }
+            else if(messageObject.activeConnections){
+                this.setState({
+                    ...this.state,
+                    activeConnections: messageObject.activeConnections
                 })
             }
         }
@@ -99,9 +107,9 @@ class App extends React.Component{
         return (
             <React.Fragment>
                 <TheHeader/>
-                <Speak send={(message)=>this.sendMessage(message)}/>
-                <Body userId={this.state.id}/>
-            </React.Fragment>            
+                <Speak userId={this.state.id} send={(message)=>this.sendMessage(message)}/>
+                <Body userId={this.state.id} activeConnections={this.state.activeConnections}/>
+            </React.Fragment>
         );
     }
 }

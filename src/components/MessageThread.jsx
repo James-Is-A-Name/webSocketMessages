@@ -9,8 +9,14 @@ function MessageThread(props){
     
     let personTitle = <h2>Unknown user</h2>;
     if(props.messages.length > 0){
-        if(props.messages[0])
-        personTitle = <h2>Person {props.messages[0].id}</h2>
+        if(props.messages[0]){
+            if(props.isActive){
+                personTitle = <h2>Person {props.messages[0].id}</h2>
+            }
+            else{
+                personTitle = <h2 style={{color:"red"}}>disconnected-Person {props.messages[0].id}</h2>
+            }
+        }
     }
 
     return (
