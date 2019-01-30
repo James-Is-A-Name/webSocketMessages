@@ -40,16 +40,36 @@ class App extends React.Component{
     }
 
     componentDidMount(){
-        this.webSocketTest();
 
-        setTimeout( ()=>{
-            this.sendMessage("I have Joined");
-        },2000)
+        fetch("/getIp").then(response => {
+
+            response.text().then((text)=>{
+
+                let serverIp = JSON.parse(text).serverIp;
+                console.log("dont remeber how this works so here is a try. server ip is = ",serverIp);
+
+                
+                this.webSocketSetup(serverIp);
+
+                setTimeout( ()=>{
+                    this.sendMessage("I have Joined");
+                },2000)
+
+            }).catch((err)=>{
+                console.log("something went wrong the computer says")
+            })
+        })
+        .catch((err)=>{
+            console.log("i porbably wrote something wrong got err of ",err)
+        })
     }
 
-    webSocketTest(){
+    webSocketSetup(ipAddress){
+        
+        // let ws = new WebSocket("ws://localhost:43211");
 
-        let ws = new WebSocket("ws://localhost:43211");
+        //i feel there is a better way than this
+        let ws = new WebSocket(`ws://${ipAddress}:43211`);
         // will want a way for this to automatically set itself based on where it is installed
             // dns stuff might sort it out
         // let ws = new WebSocket("ws://192.168.1.82:43211");
