@@ -24,6 +24,19 @@ function broadcastActiveConnections(){
         }
     })
 }
+
+function sendDirectMessage(toUserId,fromUserId,messageText){
+    let connection = webSocketsConnected.find((connection)=> connection.id == toUserId )
+    if(connection && !connection.ended){
+        if(connection.ws.readyState === 1){
+            connection.ws.send(JSON.stringify({id:fromUserId, text:messageText}));
+        }
+        else{
+            connection.ended = true;
+        }
+    }
+}
+
 function broadcastMessage(messageText,idOfSender){
     webSocketsConnected.forEach((connection)=>{
         if(!connection.ended){        
@@ -79,8 +92,13 @@ function webSocketStart(portNum , completedCallback){
 
         ws.on("message",(message)=>{
             let theMessage = JSON.parse(message);
+            console.log("got message of ",theMessage)
             if(theMessage.giveMeAnID){
                 getAnID(theWebsocket)
+            }
+            else if(theMessage.toUserId != "All"){
+                console.log("got here with target id being ",theMessage)
+                sendDirectMessage(theMessage.toUserId,theWebsocket.id,theMessage.text)
             }
             else{
                 handleMessge(theWebsocket,theMessage)

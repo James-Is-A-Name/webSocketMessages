@@ -22,10 +22,11 @@ class App extends React.Component{
         }
     }
 
-    sendMessage(message){
+    sendMessage(message,whoTo = "All"){
         let messageObject = {
             id: this.state.id,
-            text: message
+            text: message,
+            toUserId : whoTo
         }
         this.state.ws.send(JSON.stringify(messageObject));
     }
@@ -127,7 +128,7 @@ class App extends React.Component{
         return (
             <React.Fragment>
                 <TheHeader/>
-                <Speak userId={this.state.id} send={(message)=>this.sendMessage(message)}/>
+                <Speak userId={this.state.id} activeConnections={this.state.activeConnections} send={(message,whoTo)=>this.sendMessage(message,whoTo)}/>
                 <Body userId={this.state.id} activeConnections={this.state.activeConnections}/>
             </React.Fragment>
         );
