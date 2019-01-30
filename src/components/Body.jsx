@@ -28,7 +28,7 @@ function Body(props){
     });
     
     return (
-        <div style={{display:"grid", gridTemplateColumns:"1fr 1fr 1fr"}}>
+        <div style={{display:"grid", gridTemplateColumns:"minmax(100px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr)"}}>
             {theMessages}
         </div>
     );
